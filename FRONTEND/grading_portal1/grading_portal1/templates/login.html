@@ -1,0 +1,264 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>     
+    <meta charset="UTF-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <title>PSU Portal</title>     
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>         
+        body {             
+            font-family: Arial, sans-serif;             
+            margin: 0;             
+            padding: 0;             
+            background-size: cover;             
+            background-attachment: fixed;             
+            height: 100vh;             
+            animation: slideBackground 15s infinite;         
+        }          
+
+        @keyframes slideBackground {             
+            0% { background-image: url('{{ url_for("static", filename="images/1.jpg") }}'); }             
+            33% { background-image: url('{{ url_for("static", filename="images/pangasinan-state-university-1536x864.jpg") }}'); }             
+            66% { background-image: url('{{ url_for("static", filename="images/3.-Student-Lounge-scaled.jpg") }}'); }             
+            100% { background-image: url('{{ url_for("static", filename="images/Student4-scaled-1.jpg") }}'); }         
+        }          
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 51, 102, 0.8);
+        color: white;
+        padding: 10px;
+    }
+
+    .header img {
+        height: 50px;
+        margin-right: 20px; /* Adjusts space between logo and text */
+    }
+
+    .header h1 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    /* Responsive Adjustment */
+    @media (max-width: 480px) {
+        .header img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+    }
+
+        .container {             
+            margin: 50px auto;             
+            width: 300px;             
+            background: white;             
+            padding: 20px;             
+            border: 1px solid #ddd;             
+            border-radius: 5px;             
+            text-align: center;         
+        }          
+
+        .container h2 {             
+            color: #003366;             
+            margin-bottom: 20px;         
+        }          
+
+        .form-group {             
+            margin-bottom: 15px;             
+            text-align: left;         
+        }          
+
+        .form-group label {             
+            display: block;             
+            margin-bottom: 5px;             
+            font-size: 14px;         
+        }          
+
+        .form-group input {             
+            width: 100%;             
+            padding: 8px;             
+            box-sizing: border-box;             
+            border: 1px solid #ddd;             
+            border-radius: 3px;         
+        }          
+
+        .form-group a {             
+            font-size: 12px;             
+            color: #003366;             
+            text-decoration: none;         
+        }          
+
+        .form-group a:hover {             
+            text-decoration: underline;         
+        }          
+
+        .button-group {             
+            margin-top: 20px;         
+        }          
+
+        .button-group button {             
+            background-color: #003366;             
+            color: white;             
+            padding: 10px 20px;             
+            border: none;             
+            border-radius: 3px;             
+            cursor: pointer;         
+        }          
+
+        .button-group button:hover {             
+            background-color: #0059b3;         
+        }          
+
+        .error-message {             
+            color: red;             
+            font-size: 14px;             
+            margin-bottom: 15px;             
+            text-align: center;         
+        }          
+
+        .footer {             
+            position: fixed;             
+            bottom: 0;             
+            left: 0;             
+            width: 100%;             
+            text-align: center;             
+            font-size: 12px;             
+            color: #666;             
+            background-color: rgba(255, 255, 255, 0.8);             
+            padding: 10px 0;         
+        }    
+
+        /* Dark Mode Styles */  
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1e1e1e;
+                color: white;
+            }
+
+            .header {
+                background-color: rgba(20, 20, 20, 0.8);
+            }
+
+            .container {
+                background-color: #2c2c2c;
+                color: white;
+                border: 1px solid #444;
+            }
+
+            .container h2 {
+                color: #66b2ff;
+            }
+
+            .form-group input {
+                background-color: #333;
+                color: white;
+                border: 1px solid #555;
+            }
+
+            .form-group a {
+                color: #66b2ff;
+            }
+
+            .form-group a:hover {
+                text-decoration: underline;
+            }
+
+            .button-group button {
+                background-color: #0059b3;
+            }
+
+            .button-group button:hover {
+                background-color: #007bff;
+            }
+
+            .footer {
+                background-color: rgba(34, 34, 34, 0.8);
+                color: #aaa;
+            }
+        }    
+        
+        @media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1e1e1e;
+        color: #ddd;
+    }
+}
+/* Main container dark mode */
+.container.dark-mode {
+    background-color: #2a2a2a;
+    color: #ddd;
+}
+
+/* Headings and text in dark mode */
+h1.dark-mode, h3.dark-mode, p.dark-mode {
+    color: #fff;
+}
+
+/* Dark mode for the menu container and items */
+.menu-container.dark-mode {
+    background-color: transparent;
+}
+
+.menu-item.dark-mode {
+    background-color: #333;
+    color: #ddd;
+}
+
+.menu-item.dark-mode p {
+    color: #ccc;
+}
+
+.menu-item.dark-mode:hover {
+    background-color: #444;
+}
+
+    </style> 
+</head> 
+
+<body>     
+    <div class="header">         
+        <img src="{{ url_for('static', filename='images/Pangasinan_State_University_logo.png') }}" alt="PSU Logo">         
+        <h1>Pangasinan State University</h1>     
+    </div>     
+
+    <div class="container">         
+        <h2>Student & Faculty Portal</h2>         
+
+        <!-- Error message section -->
+        {% if error_message %}
+            <div class="error-message">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        <form action="/login" method="post">             
+            <div class="form-group">                 
+                <label for="username">User Name:</label>                 
+                <input type="text" id="username" name="username" required>             
+            </div>             
+            <div class="form-group">                 
+                <label for="password">Password:</label>                 
+                <input type="password" id="password" name="password" required>             
+            </div>             
+            <div class="form-group">                 
+                <a href="/forgot-password">Forgot Password?</a>             
+            </div>             
+            <div class="button-group">                 
+                <button type="submit">Login</button>                 
+                <button type="reset">Reset</button>             
+            </div>         
+        </form>     
+    </div>     
+
+    <div class="footer">         
+        2024 PSU COMPUTER ENGINEERING DEPARTMENT. 
+        <br>All rights reserved.</p>
+    </div> 
+</body> 
+</html>

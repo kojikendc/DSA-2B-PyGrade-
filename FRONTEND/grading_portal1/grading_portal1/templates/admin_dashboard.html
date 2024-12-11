@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: margin-left 0.3s ease;
+        }
+
+        
+
+        /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -300px; /* Sidebar hidden by default */
+            background-color: #003366;
+            color: white;
+            padding: 20px;
+            transition: left 0.3s ease;
+            z-index: 1000; /* Sidebar z-index */
+            max-height: 100%; /* Ensure sidebar takes full height */
+    overflow-y: auto; /* Enables vertical scrolling */
+        }
+
+        .sidebar .sidebar-item {
+            padding: 15px;
+            font-size: 1em;
+            cursor: pointer;
+            
+        }
+
+        .sidebar .sidebar-item:hover {
+            background-color: #005c99;
+        }
+
+        .sidebar .sidebar-item.logout {
+            background-color: #cc0000;
+        }
+
+        .sidebar .sidebar-item.logout:hover {
+            background-color: #b30000;
+        }
+
+        .sidebar .date-time {
+            font-size: 1em;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Sidebar toggle button */
+        .sidebar-toggle {
+            position: fixed;
+            top: 16px; /* Space from the top */
+            left: 15px; /* Position away from the sidebar */
+            font-size: 30px;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .logo-image {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-width: 150px;
+            height: auto;
+        }
+
+        /* Header styles */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #003366;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 0px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            width: 85%;
+            margin: 30px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .menu-item {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+        }
+
+        .menu-item img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .menu-item p {
+            font-size: 1em;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Dark Mode Styles */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1e1e1e;
+                color: #ddd;
+            }
+
+            .header {
+                background-color: #2a2a2a;
+                color: #ddd;
+            }
+
+            h1, h2, h3 {
+                color: #66b2ff;
+            }
+
+            .menu-item {
+                background-color: #2c2c2c;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            }
+
+            .menu-item p {
+                color: #bbb;
+            }
+
+            a {
+                color: #66b2ff;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+
+        /* Sidebar active state */
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar .sidebar-item.logout {
+    background-color: #cc0000;
+    color: white;
+    padding: 10px 15px; /* Smaller padding */
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: block;
+    width: auto; /* Adjust to fit content */
+    margin-top: 10px; /* Adds space between the logout and other items */
+}
+
+.sidebar .sidebar-item.logout:hover {
+    background-color: #b30000;
+    transform: scale(1.05); /* Slightly enlarges on hover */
+}
+
+.sidebar .sidebar-item.logout button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.9em; /* Smaller font size */
+    cursor: pointer;
+    width: 100%;
+    padding: 8px; /* Smaller padding inside the button */
+}
+
+
+        .footer {
+            margin-top: 180px;
+            padding: 10px;
+            background-color: #6b6c6d;
+            text-align: center;
+            color: #ffffff;
+            border-top: 0px solid #ddd;
+            position: relative;
+            font-size: 14px;
+        }
+
+        /* Add this in the <style> section or in an external CSS file */
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px; /* Half of the height */
+    margin-left: -60px; /* Half of the width */
+    z-index: 1000;
+}
+
+
+/* Dark mode switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    margin-left: auto;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 25px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #66b2ff;
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    body.dark-mode {
+        background-color: #1e1e1e;
+        color: #ddd;
+    }
+
+    .sidebar.dark-mode {
+        background-color: #333;
+        color: #ccc;
+    }
+
+    .header.dark-mode {
+        background-color: #444;
+        color: #fff;
+    }
+
+    .menu-item.dark-mode {
+        background-color: #555;
+        color: #fff;
+    }
+
+    .menu-item.dark-mode p {
+        color: #ddd;
+    }
+
+    /* Body dark mode */
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #ddd;
+}
+
+/* Header dark mode */
+.header.dark-mode {
+    background-color: #333;
+    color: white;
+}
+
+/* Sidebar dark mode */
+.sidebar.dark-mode {
+    background-color: #292929;
+    color: #ccc;
+}
+
+/* Menu container dark mode */
+.menu-container.dark-mode {
+    background-color: transparent;
+}
+
+/* Cards / Menu items in dark mode */
+.menu-item.dark-mode {
+    background-color: #2d2d2d;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add hover effect */
+.menu-item.dark-mode:hover {
+    background-color: #383838;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer dark mode */
+.footer.dark-mode {
+    background-color: #292929;
+    color: #ddd;
+}
+
+/* Main title */
+.main-title {
+    color: #4cafef;
+}
+
+/* Button or switch styles for the dark mode toggle */
+#darkModeToggle {
+    cursor: pointer;
+}
+.sidebar.dark-mode {
+    background-color: #292929;
+    color: #ccc;
+}
+
+.footer.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+</style>
+
+    </style>
+</head>
+<body>
+  
+    
+    
+
+    <div class="sidebar" id="sidebar">
+        <br><br>
+    
+        <!-- Sidebar Items -->
+        <div class="sidebar-item" id="profile"><i class="fas fa-user">&nbsp;&nbsp;</i>Profile</div>
+        <div class="sidebar-item" id="settings"><i class="fas fa-cogs">&nbsp;&nbsp;</i>Settings</div>
+        <div class="sidebar-item" id="notifications"><i class="fas fa-bell">&nbsp;&nbsp;</i>Notifications</div>
+        <div class="sidebar-item" id="class-search"><i class="fas fa-search">&nbsp;&nbsp;</i>Class Search</div>
+        <div class="sidebar-item" id="announcements"><i class="fas fa-bullhorn">&nbsp;&nbsp;</i>Announcements</div>
+        <div class="sidebar-item" id="calendar"><i class="fas fa-calendar-alt">&nbsp;&nbsp;</i>Calendar</div>
+        <div class="sidebar-item" id="schedule"><i class="fas fa-calendar-check">&nbsp;&nbsp;</i>Schedule</div>
+        <div class="sidebar-item" id="help"><i class="fas fa-question-circle">&nbsp;&nbsp;</i>Help</div>
+    
+        <!-- Date-Time -->
+     <div class="date-time" id="date-time"></div>
+    
+        <!-- Logout Button -->
+        <form action="{{ url_for('logout') }}" method="POST">
+            <div class="sidebar-item logout">
+                <button type="submit">Log Out</button>
+            </div>
+        </form>
+    </div>
+    
+
+
+        
+    </div>
+
+    <!-- Sidebar toggle button -->
+    <span class="sidebar-toggle" onclick="toggleSidebar()">&#9776;</span>
+    
+
+    <!-- Main Content -->
+    <div class="header">
+    <div class="logo-container">
+        <span class="logo-text">Pangasinan State University</span>
+    </div>
+    <!-- Dark Mode Switch -->
+    <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+    </label>
+</div>
+
+    
+    
+    <div class="container">
+        <!-- Logo Image -->
+        <img src="{{ url_for('static', filename='images/Pangasinan_State_University_logo.png') }}" alt="Logo" class="logo-image">
+
+        <!-- Welcome Text -->
+        <h1>Welcome to the Faculty Portal</h1>
+        <p>Access essential resources for managing your academic and administrative tasks.</p>
+        <h3>Main Menu</h3>
+    </div>
+
+    
+
+    <div class="menu-container">
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/vw grade.png') }}" alt="View Grade">
+            <p>Add Subjects</p>
+        </div>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/grade reques.png') }}" alt="Grade Request">
+            <p>Manage Subjects</p>
+        </div>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/schedule request.png') }}" alt="Schedule Request">
+            <p>Edit Grades</p>
+        </div>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/reports.png') }}" alt="Reports">
+            <p>Grade Report</p>
+        </div>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/contact.png') }}" alt="Contact">
+            <p>Enrollment</p>
+        </div>
+    </div>
+
+    <!-- Add this inside the body of your HTML templates -->
+
+<div id="loader" class="loader" style="display: none;"></div>  <!-- This div will be shown when loading -->
+
+<!-- Your form and other content here -->
+
+<!-- Include the script to handle the loader visibility -->
+<script>
+    // Show loader when the form is submitted
+    document.querySelector("form").addEventListener("submit", function() {
+        document.getElementById("loader").style.display = "block";
+    });
+</script>
+
+<script>
+    document.getElementById('darkModeToggle').addEventListener('change', function () {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    });
+
+    // Load the user's saved preference on page load
+    window.addEventListener('load', function () {
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('darkModeToggle').checked = true;
+        }
+    });
+</script>
+<script>
+// Toggle Dark Mode
+function toggleDarkMode() {
+    const elements = [
+        document.body,
+        document.getElementById('sidebar'),
+        document.querySelector('.header'),
+        ...document.querySelectorAll('.menu-item'),
+        document.querySelector('.footer')
+    ];
+
+    elements.forEach(el => el.classList.toggle('dark-mode'));
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+}
+
+// Load saved theme on page load
+window.addEventListener('load', () => {
+    if (localStorage.getItem('theme') === 'dark') {
+        toggleDarkMode();
+        document.getElementById('darkModeToggle').checked = true;
+    }
+});
+
+// Attach event listener to dark mode toggle switch
+document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
+
+// Sidebar toggle function
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('active');
+}
+
+        elements.forEach(el => el.classList.toggle('dark-mode'));
+
+        // Save preference to localStorage
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    
+
+    // Load user's preference on page load
+    window.addEventListener('load', function () {
+        if (localStorage.getItem('theme') === 'dark') {
+            toggleDarkMode(); // Apply dark mode if saved preference is dark
+            document.getElementById('darkModeToggle').checked = true;
+        }
+    });
+
+    // Attach event listener to the toggle switch
+    document.getElementById('darkModeToggle').addEventListener('change', toggleDarkMode);
+</script>
+
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+  const sidebarActions = {
+    profile: () => window.open("https://example.com/profile", "_blank"),
+    settings: () => window.open("https://example.com/settings", "_blank"),
+    notifications: () => window.open("https://example.com/notifications", "_blank"),
+    classSearch: () => window.open("https://example.com/class-search", "_blank"),
+    announcements: () => window.open("https://example.com/announcements", "_blank"),
+    calendar: () => window.open("https://example.com/calendar", "_blank"),
+    schedule: () => window.open("https://example.com/schedule", "_blank"),
+    help: () => window.open("https://example.com/help", "_blank"),
+  };
+
+  Object.keys(sidebarActions).forEach((id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener("click", (e) => {
+        e.preventDefault(); // Prevent any default behavior
+        sidebarActions[id](); // Call the corresponding action
+      });
+    }
+  });
+});
+  // Function to update time every second
+  function updateTime() {
+            const now = new Date();
+            const formattedTime = now.toDateString() + ' ' + now.toLocaleTimeString();
+            document.getElementById('date-time').innerHTML = formattedTime;
+        }
+
+        // Call updateTime function every second
+        setInterval(updateTime, 1000);
+
+
+        
+    </script>
+
+    <div class="footer">
+        <p>&copy; 2024 PSU COMPUTER ENGINEERING DEPARTMENT. All rights reserved.</p>
+    </div>
+
+</body>
+</html>
